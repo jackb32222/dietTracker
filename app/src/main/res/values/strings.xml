@@ -1,4 +1,25 @@
 <resources>
-    <string name="app_name">My Application12</string>
+    <string name="app_name">Diet Tracker</string>
+
+    <string name="timer_message">The timer has expired</string>
     <string name="calories">cals</string>
+
+    <string name="calculate">Calculate</string>
+    <string name="goal">Set goal</string>
+
+    <string name="meal_1">"Meal 1"</string>
+    <string name="meal_2">"Meal 2"</string>
+    <string name="meal_3">"Meal 3"</string>
+    <string name="exercise_burnt_calories">"Exercise burnt calories"</string>
+
+    <string name="age">Age</string>
+    <string name="weight">Weight in Ibs</string>
+    <string name="height">Height in inches</string>
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="reset">Reset</string>
 </resources>

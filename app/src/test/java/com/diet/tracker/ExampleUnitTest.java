@@ -1,4 +1,4 @@
-package com.example.myapplication12;
+package com.diet.tracker;
 
 import org.junit.Test;
 
