@@ -11,15 +11,13 @@ import kotlin.math.roundToInt
 class DietViewModel @Inject constructor(private val repo: DietRepo) : ViewModel() {
 
     fun calculateBmr(age: Int, weight: Double, height: Double, female: Boolean) : Int {
-        val chocolateCalories = 230.0
-
         val bmr = if (female) {
-            655 + (4.3 * weight) + (4.7 * height) - (4.7 * age)
+            655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age)
         } else {
-            66 + (6.3 * weight) + (12.9 * height) - (6.8 * age)
+            66.47 + (13.75 * weight) + (5.003 * height) - (6.755 * age)
         }
 
-        return (bmr / chocolateCalories).roundToInt()
+        return bmr.roundToInt()
     }
 
     fun calculateCalories(meal1: Int, meal2: Int, meal3: Int, exercise: Int) =
