@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.diet.tracker.R
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 class YoutubeVideoView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
@@ -32,7 +34,7 @@ class YoutubeVideoView(context: Context, attrs: AttributeSet?) : FrameLayout(con
         youtubeView.enableAutomaticInitialization = false
         youtubeView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.loadVideo(url, 0f)
+                youTubePlayer.cueVideo(url, 0f)
             }
         })
     }
