@@ -1,5 +1,6 @@
 package com.diet.tracker.ui
 
+import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
@@ -14,14 +15,21 @@ class AlarmActivity: AppCompatActivity() {
 
     @Inject lateinit var notificationManager: DietNotificationManager
 
+    private lateinit var mediaPlayer: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
 
         notificationManager.showAlarmNotification()
 
-        val notification: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val r = RingtoneManager.getRingtone(applicationContext, notification)
-        r.play()
+        mediaPlayer = MediaPlayer.create(this, R.raw.sound)
+        mediaPlayer.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer.stop()
+        mediaPlayer.release()
     }
 }
