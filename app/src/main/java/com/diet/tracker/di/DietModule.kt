@@ -2,6 +2,7 @@ package com.diet.tracker.di
 
 import android.content.Context
 import com.diet.tracker.datasource.local.AppDataStore
+import com.diet.tracker.notification.DietAlarmManager
 import com.diet.tracker.notification.DietNotificationManager
 import com.diet.tracker.repository.DietRepo
 import com.diet.tracker.repository.DietRepoImpl
@@ -19,6 +20,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DietModule {
+
+    @Provides
+    @Singleton
+    fun provideAlarmManager(@ApplicationContext context: Context) = DietAlarmManager(context)
 
     @Provides
     @Singleton
