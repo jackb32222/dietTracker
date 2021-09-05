@@ -2,6 +2,8 @@ package com.diet.tracker.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.diet.tracker.datasource.model.Bmr
+import com.diet.tracker.datasource.model.Meal
 import com.diet.tracker.repository.DietRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -26,4 +28,12 @@ class DietViewModel @Inject constructor(private val repo: DietRepo) : ViewModel(
     fun getGoal() = repo.flowGetGoal().asLiveData()
 
     fun setGoal(value: Int) = repo.setGoal(value)
+
+    fun getMeal() = repo.flowGetMeal().asLiveData()
+
+    fun getBmr() = repo.flowGetBmr().asLiveData()
+
+    fun setMeal(meal: Meal) = repo.setMeal(meal)
+
+    fun setBmr(bmr: Bmr) = repo.setBmr(bmr)
 }

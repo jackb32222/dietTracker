@@ -80,6 +80,8 @@ dependencies {
     implementation rootProject.deps.datastore
     implementation rootProject.deps.preference
 
+    implementation rootProject.deps.gson
+
     implementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test:core-ktx:1.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

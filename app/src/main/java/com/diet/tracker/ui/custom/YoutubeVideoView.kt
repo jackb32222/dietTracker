@@ -29,6 +29,7 @@ class YoutubeVideoView(context: Context, attrs: AttributeSet?) : FrameLayout(con
     }
 
     fun setYoutubeVideoUrl(url: String) {
+        youtubeView.enableAutomaticInitialization = false
         youtubeView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youTubePlayer.loadVideo(url, 0f)

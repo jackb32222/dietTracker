@@ -5,11 +5,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.diet.tracker.R
 import com.diet.tracker.databinding.ActivityBmrBinding
+import com.diet.tracker.datasource.model.Bmr
+import com.diet.tracker.datasource.model.Meal
 import com.diet.tracker.utils.getDouble
 import com.diet.tracker.utils.getInt
 import com.diet.tracker.viewmodel.DietViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions.Companion.default
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,10 +25,22 @@ class BmrActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBmrBinding
     private val viewModel: DietViewModel by viewModels()
 
+    private val bmrLiveData by lazy { viewModel.getBmr() }
+    private val bmrObserver = Observer<Bmr> {
+        bmrLiveData.removeObservers(this)
+        binding.inputAge.editText?.setText(it.age.toString())
+        binding.inputWeight.editText?.setText(it.weight.toString())
+        binding.inputHeight.editText?.setText(it.height.toString())
+        binding.rdoFemale.isChecked = it.isFemale
+
+        binding.tvResult.text = String.format("Result: %d", getResult())
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_bmr)
         binding.btnCalculate.setOnClickListener { calculateBmr() }
+        binding.btnRefresh.setOnClickListener { refresh() }
 
         binding.inputAge.editText?.addTextChangedListener { calculateBmr() }
         binding.inputWeight.editText?.addTextChangedListener { calculateBmr() }
@@ -38,6 +54,14 @@ class BmrActivity : AppCompatActivity() {
             binding.tvGoal.text = String.format("Goal: %d", it)
         }
 
+        bmrLiveData.observe(this, bmrObserver)
+    }
+
+    private fun refresh() {
+        binding.inputAge.editText?.setText("")
+        binding.inputHeight.editText?.setText("")
+        binding.inputWeight.editText?.setText("")
+
         calculateBmr()
     }
 
@@ -48,6 +72,13 @@ class BmrActivity : AppCompatActivity() {
 
     private fun calculateBmr() {
         binding.tvResult.text = String.format("Result: %d", getResult())
+
+        viewModel.setBmr(Bmr(
+            binding.inputAge.getInt(),
+            binding.inputWeight.getDouble(),
+            binding.inputHeight.getDouble(),
+            binding.rdoFemale.isChecked
+        ))
     }
 
     private fun getResult() : Int {

@@ -6,6 +6,7 @@
 
     <string name="calculate">Calculate</string>
     <string name="goal">Set goal</string>
+    <string name="refresh">Refresh</string>
 
     <string name="meal_1">"Meal 1"</string>
     <string name="meal_2">"Meal 2"</string>

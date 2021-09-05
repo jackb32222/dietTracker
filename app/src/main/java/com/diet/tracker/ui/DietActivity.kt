@@ -10,8 +10,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.diet.tracker.R
 import com.diet.tracker.databinding.ActivityMainBinding
+import com.diet.tracker.datasource.model.Meal
 import com.diet.tracker.service.TimerService
 import com.diet.tracker.ui.custom.TimerView
 import com.diet.tracker.utils.getInt
@@ -50,6 +52,17 @@ class DietActivity : AppCompatActivity(), TimerView.OnChanged {
         }
     }
 
+    private val mealLiveData by lazy { viewModel.getMeal() }
+    private val mealObserver = Observer<Meal> {
+        mealLiveData.removeObservers(this)
+        binding.inputMeal1.editText?.setText(it.meal1.toString())
+        binding.inputMeal2.editText?.setText(it.meal2.toString())
+        binding.inputMeal3.editText?.setText(it.meal3.toString())
+        binding.inputExercise.editText?.setText(it.exercise.toString())
+
+        binding.tvResult.text = String.format("Result: %d", getResult())
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -62,6 +75,7 @@ class DietActivity : AppCompatActivity(), TimerView.OnChanged {
         binding.videoView.setYoutubeVideoUrl(VIDEO_URL)
         binding.btnSetGoal.setOnClickListener { setGoal() }
         binding.btnCalculate.setOnClickListener { calculateCalories() }
+        binding.btnRefresh.setOnClickListener { refreshData() }
 
         binding.timerView.onChangeListener = this
 
@@ -69,9 +83,18 @@ class DietActivity : AppCompatActivity(), TimerView.OnChanged {
             binding.tvGoal.text = String.format("Goal: %d", it)
         }
 
+        mealLiveData.observe(this, mealObserver)
+
         Intent(this, TimerService::class.java).apply {
             bindService(this, serviceConnection, BIND_AUTO_CREATE)
         }
+    }
+
+    private fun refreshData() {
+        binding.inputMeal1.editText?.setText("")
+        binding.inputMeal2.editText?.setText("")
+        binding.inputMeal3.editText?.setText("")
+        binding.inputExercise.editText?.setText("")
 
         calculateCalories()
     }
@@ -103,9 +126,18 @@ class DietActivity : AppCompatActivity(), TimerView.OnChanged {
 
     private fun calculateCalories() {
         binding.tvResult.text = String.format("Result: %d", getResult())
+
+        viewModel.setMeal(
+            Meal(
+                binding.inputMeal1.getInt(),
+                binding.inputMeal2.getInt(),
+                binding.inputMeal3.getInt(),
+                binding.inputExercise.getInt()
+            )
+        )
     }
 
-    private fun getResult() : Int {
+    private fun getResult(): Int {
         return viewModel.calculateCalories(
             binding.inputMeal1.getInt(),
             binding.inputMeal2.getInt(),

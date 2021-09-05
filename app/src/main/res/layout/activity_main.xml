@@ -120,7 +120,7 @@
             android:id="@+id/btnSetGoal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@id/btnRefresh"
             android:layout_toStartOf="@id/tvGoal"
             android:text="@string/goal" />
 
@@ -134,5 +134,12 @@
             android:layout_alignParentEnd="true"
             android:gravity="center"
             tools:text="Goal: 1500" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:text="@string/refresh" />
     </RelativeLayout>
 </layout>
