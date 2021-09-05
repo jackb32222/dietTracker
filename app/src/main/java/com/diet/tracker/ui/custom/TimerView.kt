@@ -129,7 +129,7 @@ class TimerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context
         }
     }
 
-    private fun durationMs() = 10_000L //sliderTimerValue.value.toLong()
+    private fun durationMs() = sliderTimerValue.value.toLong()
 
     override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
         remainingText = value.toLong().parseToString()
