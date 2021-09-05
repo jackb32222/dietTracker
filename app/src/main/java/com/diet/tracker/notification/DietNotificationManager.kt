@@ -58,7 +58,6 @@ class DietNotificationManager(private val context: Context) {
             .setContentText(context.getString(R.string.timer_message))
             .setSmallIcon(R.mipmap.ic_launcher)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
             .build()
 
         notificationManager.notify(Random.nextInt(), notification)

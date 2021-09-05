@@ -69,12 +69,12 @@ class TimerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context
         sliderTimerValue.apply {
             valueFrom = 0f
             valueTo = TimeUnit.HOURS.toMillis(8).toFloat()
+            addOnChangeListener(this@TimerView)
         }
 
         btnStart.setOnClickListener { start(durationMs()) }
         btnPause.setOnClickListener { pause() }
         btnReset.setOnClickListener { reset() }
-        sliderTimerValue.addOnChangeListener(this)
 
         initTimer()
     }
@@ -93,7 +93,6 @@ class TimerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context
                 liveDataTimer.removeObserver(this)
                 isRunning = timer.isRunning()
                 remainingTime = timer.getRemainingTime()
-
                 if (isRunning) start(remainingTime, resume = true)
             }
         })
@@ -130,7 +129,7 @@ class TimerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context
         }
     }
 
-    private fun durationMs() = 30_000L //sliderTimerValue.value.toLong()
+    private fun durationMs() = 10_000L //sliderTimerValue.value.toLong()
 
     override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
         remainingText = value.toLong().parseToString()
