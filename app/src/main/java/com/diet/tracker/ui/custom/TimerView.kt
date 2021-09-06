@@ -12,6 +12,7 @@ import com.diet.tracker.R
 import com.diet.tracker.datasource.model.Timer
 import com.diet.tracker.notification.DietAlarmManager
 import com.diet.tracker.repository.DietRepo
+import com.diet.tracker.service.TimerService
 import com.diet.tracker.utils.isEnable
 import com.diet.tracker.utils.parseToString
 import com.diet.tracker.utils.text
@@ -112,6 +113,7 @@ class TimerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context
                 repo.saveTimer(this)
                 alarmManager.start(this)
                 currentTimer = this
+                TimerService.start(context, durationMs)
             }
         }
     }
@@ -120,6 +122,7 @@ class TimerView(context: Context, attrs: AttributeSet?) : RelativeLayout(context
         timer.cancel()
         alarmManager.pause()
         isRunning = false
+        TimerService.stop(context)
     }
 
     private fun reset() {

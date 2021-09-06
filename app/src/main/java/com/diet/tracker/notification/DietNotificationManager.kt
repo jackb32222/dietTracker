@@ -31,7 +31,7 @@ class DietNotificationManager(private val context: Context) {
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createChannel(DIET_CHANNEL_ID, DIET_CHANNEL_NAME)
+            createChannel(DIET_CHANNEL_ID, DIET_CHANNEL_NAME, NotificationManager.IMPORTANCE_LOW)
             createChannel(ALARM_CHANNEL_ID, ALARM_CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
         }
     }
@@ -68,6 +68,7 @@ class DietNotificationManager(private val context: Context) {
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(contentText)
             .setSmallIcon(R.mipmap.ic_launcher)
+            .setNotificationSilent()
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
     }
@@ -76,6 +77,7 @@ class DietNotificationManager(private val context: Context) {
         timerNotificationBuilder
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(contentText)
+            .setNotificationSilent()
             .setSmallIcon(R.mipmap.ic_launcher)
         return notificationManager.notify(notificationId, timerNotificationBuilder.build())
     }
