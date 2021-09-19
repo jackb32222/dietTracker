@@ -12,9 +12,11 @@ import com.diet.tracker.databinding.ActivityMainBinding
 import com.diet.tracker.datasource.model.Meal
 import com.diet.tracker.notification.DietAlarmManager
 import com.diet.tracker.service.TimerService
+import com.diet.tracker.ui.auth.SignInActivity
 import com.diet.tracker.ui.custom.TimerView
 import com.diet.tracker.utils.getInt
 import com.diet.tracker.viewmodel.DietViewModel
+import com.feature.firebase.auth.AuthManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,6 +31,7 @@ class DietActivity : AppCompatActivity() {
 
     private val viewModel: DietViewModel by viewModels()
     @Inject lateinit var alarmManager: DietAlarmManager
+    @Inject lateinit var authManager: AuthManager
 
     private val mealLiveData by lazy { viewModel.getMeal() }
     private val mealObserver = Observer<Meal> {
@@ -54,6 +57,7 @@ class DietActivity : AppCompatActivity() {
         binding.btnSetGoal.setOnClickListener { setGoal() }
         binding.btnCalculate.setOnClickListener { calculateCalories() }
         binding.btnRefresh.setOnClickListener { refreshData() }
+        binding.btnLogout.setOnClickListener { logout() }
 
         viewModel.getGoal().observe(this) {
             binding.tvGoal.text = String.format("Goal: %d", it)
@@ -96,5 +100,11 @@ class DietActivity : AppCompatActivity() {
             binding.inputMeal3.getInt(),
             binding.inputExercise.getInt()
         )
+    }
+
+    private fun logout() {
+        authManager.logout()
+        startActivity(Intent(this, SignInActivity::class.java))
+        finish()
     }
 }
