@@ -9,5 +9,7 @@ interface AuthManager {
     fun loginWithFacebook(accessToken: String, callback: AuthCallback)
     fun loginWithEmailPassword(email: String?, passwd: String?, callback: AuthCallback)
     fun loginAnonymous(callback: AuthCallback)
+    fun logout()
+    fun isLoggedIn() : Boolean
 }
 

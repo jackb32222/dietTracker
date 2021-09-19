@@ -97,4 +97,10 @@ class AuthManagerImpl(private val firebaseAuth: FirebaseAuth) : AuthManager {
                 callback.onLoginFailure(it)
             }
     }
+
+    override fun logout() {
+        firebaseAuth.signOut()
+    }
+
+    override fun isLoggedIn() = firebaseAuth.currentUser != null
 }
