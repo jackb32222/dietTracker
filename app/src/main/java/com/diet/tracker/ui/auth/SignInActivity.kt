@@ -1,13 +1,20 @@
 package com.diet.tracker.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.diet.tracker.R
 import com.diet.tracker.databinding.ActivitySiginInBinding
+import com.diet.tracker.ui.DietActivity
+import com.feature.firebase.auth.AuthCallback
+import com.feature.firebase.auth.domain.model.AuthUser
+import com.feature.firebase.auth.ui.AuthActivity
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 
 @AndroidEntryPoint
-class SignInActivity : AuthActivity() {
+class SignInActivity : AuthActivity(), AuthCallback {
 
     private lateinit var binding: ActivitySiginInBinding
 
@@ -31,13 +38,32 @@ class SignInActivity : AuthActivity() {
     }
 
     private fun initListeners() {
-        binding.btnSignIn.setOnClickListener { signIn() }
-        binding.incSocialAuth.btnGoogle.setOnClickListener { signInWithGoogle() }
-        binding.incSocialAuth.btnFacebook.setOnClickListener { signInWithFacebook() }
-        binding.incSocialAuth.btnAnonymous.setOnClickListener { signInAnonymous() }
+        binding.tvRegister.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+
+        registerAuthCallback(this)
+
+        registerSocialLoginView(
+            btnGoogleLogin = binding.incSocialAuth.btnGoogle,
+            btnFacebookLogin = binding.incSocialAuth.btnFacebook,
+            btnAnonymousLogin = binding.incSocialAuth.btnAnonymous
+        )
+
+        registerEmailPasswordLoginView(
+            btnEmailPasswdLogin = binding.btnSignIn,
+            funGetEmail = { email },
+            funGetPasswd = { password }
+        )
     }
 
-    private fun signIn() {
-        authManager.loginWithEmailPassword(email, password, this)
+    override fun onLoginSuccess(user: AuthUser) {
+        startActivity(Intent(this, DietActivity::class.java))
+        finish()
+    }
+
+    override fun onLoginFailure(exc: Exception?) {
+        Log.e("nt.dung", "Login failed -> ${exc?.message}")
+        exc?.printStackTrace()
     }
 }

@@ -8,6 +8,26 @@ import java.lang.IllegalArgumentException
 
 class AuthManagerImpl(private val firebaseAuth: FirebaseAuth) : AuthManager {
 
+    override fun registerWithEmailPassword(email: String?, passwd: String?, callback: AuthCallback) {
+        if (!email.isNullOrEmpty() && !passwd.isNullOrEmpty()) {
+            firebaseAuth.createUserWithEmailAndPassword(email, passwd)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        firebaseAuth.currentUser?.let { firebaseUser ->
+                            callback.onRegisterSuccess(firebaseUser.toAuthUser())
+                        }
+                    } else {
+                        callback.onRegisterFailure(it.exception)
+                    }
+                }
+                .addOnFailureListener {
+                    callback.onRegisterFailure(it)
+                }
+        } else {
+            callback.onRegisterFailure(IllegalArgumentException("Email & Password must not empty"))
+        }
+    }
+
     override fun loginWithGoogle(idToken: String, callback: AuthCallback) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         firebaseAuth.signInWithCredential(credential)

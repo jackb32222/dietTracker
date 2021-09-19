@@ -6,6 +6,6 @@ import java.lang.Exception
 interface AuthCallback {
     fun onLoginSuccess(user: AuthUser) {}
     fun onLoginFailure(exc: Exception?) {}
-    fun onRegisterSuccess() {}
-    fun onRegisterFailure() {}
+    fun onRegisterSuccess(user: AuthUser) {}
+    fun onRegisterFailure(exc: Exception?) {}
 }
