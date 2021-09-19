@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:background="@color/black">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_vertical_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="16dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_vertical_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="16dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="clear_text"
+            app:layout_constraintEnd_toEndOf="@id/gl_vertical_end"
+            app:layout_constraintStart_toStartOf="@id/gl_vertical_start"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email address"
+                tools:text="dungnt.fet@gmail.com" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputPasswd"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="@id/gl_vertical_end"
+            app:layout_constraintStart_toStartOf="@id/gl_vertical_start"
+            app:layout_constraintTop_toBottomOf="@+id/inputEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="123456"
+                android:inputType="textPassword"
+                tools:text="dungnt.fet@gmail.com" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/signin"
+            app:layout_constraintEnd_toEndOf="@id/gl_vertical_end"
+            app:layout_constraintStart_toStartOf="@id/gl_vertical_start"
+            app:layout_constraintTop_toBottomOf="@id/inputPasswd" />
+
+        <include
+            android:id="@+id/inc_social_auth"
+            layout="@layout/include_social_auth"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@id/gl_vertical_end"
+            app:layout_constraintStart_toStartOf="@id/gl_vertical_start"
+            app:layout_constraintTop_toBottomOf="@id/btnSignIn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

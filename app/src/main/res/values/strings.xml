@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Diet Tracker</string>
+    <string name="facebook_app_id">572271067343034</string>
+    <string name="fb_login_protocol_scheme">fb572271067343034</string>
 
     <string name="timer_message">The timer has expired</string>
     <string name="calories">cals</string>
@@ -23,4 +25,10 @@
     <string name="start">Start</string>
     <string name="pause">Pause</string>
     <string name="reset">Reset</string>
+
+    <string name="signup">Register</string>
+    <string name="signin">Sign In</string>
+    <string name="signin_google">Sign in with Google</string>
+    <string name="signin_facebook">Sign in with Facebook</string>
+    <string name="signin_anonymous">Anonymous</string>
 </resources>

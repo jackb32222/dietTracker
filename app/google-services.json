@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "608799868854-qcbmfdbsau68sif1e92gru5apnubqdbp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.diet.tracker",
+            "certificate_hash": "5cc55dad69b5470250afd3cbf15d3f8975d09723"
+          }
+        },
+        {
           "client_id": "608799868854-u2ju2gkr6l80srnnd3fe4175tnph3jg4.apps.googleusercontent.com",
           "client_type": 3
         }
