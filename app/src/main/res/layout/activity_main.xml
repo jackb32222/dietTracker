@@ -120,7 +120,7 @@
             android:id="@+id/btnSetGoal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/btnRefresh"
+            android:layout_above="@id/actionLayout"
             android:layout_toStartOf="@id/tvGoal"
             android:text="@string/goal" />
 
@@ -135,11 +135,30 @@
             android:gravity="center"
             tools:text="Goal: 1500" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRefresh"
+        <LinearLayout
+            android:id="@+id/actionLayout"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="@string/refresh" />
+            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRefresh"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/refresh" />
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="wrap_content" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/signout" />
+        </LinearLayout>
+
     </RelativeLayout>
 </layout>
