@@ -6,6 +6,7 @@ import com.diet.tracker.notification.DietAlarmManager
 import com.diet.tracker.notification.DietNotificationManager
 import com.diet.tracker.repository.DietRepo
 import com.diet.tracker.repository.DietRepoImpl
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,4 +40,8 @@ class DietModule {
     @Provides
     @Singleton
     fun provideNotificationManager(@ApplicationContext context: Context) = DietNotificationManager(context)
+
+    @Provides
+    @Singleton
+    fun provideRealtimeDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance("https://diettracker-105a7-default-rtdb.asia-southeast1.firebasedatabase.app/")
 }

@@ -1,4 +1,3 @@
 rootProject.name = "Diet Tracker"
 include ':app'
 include ':feature-firebase-auth'
-include ':feature-firebase-database'

@@ -78,7 +78,6 @@ android.applicationVariants.all { variant ->
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':feature-firebase-auth')
-    implementation project(':feature-firebase-database')
 
     implementation rootProject.deps.coreKtx
     implementation rootProject.deps.appCompat
