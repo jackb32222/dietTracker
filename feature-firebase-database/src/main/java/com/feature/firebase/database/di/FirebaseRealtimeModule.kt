@@ -15,7 +15,7 @@ class FirebaseRealtimeModule {
 
     @Provides
     @Singleton
-    fun provideRealtimeDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance()
+    fun provideRealtimeDatabase(): FirebaseDatabase = FirebaseDatabase.getInstance("https://diettracker-105a7-default-rtdb.asia-southeast1.firebasedatabase.app/")
 
     @Provides
     @Singleton

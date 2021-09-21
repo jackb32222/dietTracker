@@ -3,7 +3,8 @@ package com.diet.tracker.datasource.model
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-data class DietVideo(val url: String?) {
+data class DietVideo(val url: String? = null) {
+
     fun getVideoId(): String? {
         var videoId: String? = null
         val regex =

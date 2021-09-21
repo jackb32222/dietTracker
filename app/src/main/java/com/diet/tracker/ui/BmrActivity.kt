@@ -54,6 +54,8 @@ class BmrActivity : AppCompatActivity() {
         videoViewModel.bmrVideo.observe(this) {
             binding.videoView.setYoutubeVideoUrl(it.getVideoId())
         }
+
+        videoViewModel.getBmrVideo()
     }
 
     private fun refresh() {

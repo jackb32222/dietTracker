@@ -2,7 +2,6 @@ package com.diet.tracker.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -70,37 +69,22 @@ class DietActivity : AppCompatActivity() {
         }
 
         binding.tvDay.text = "Day $videoIdx"
-
-        // Update current watching video to database
-        val userInfo = UserInfo(authViewModel.getUserId(), currentVideo)
-        videoViewModel.saveUserInfo(userInfo)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        binding.inputMeal1.editText?.addTextChangedListener { calculateCalories() }
-        binding.inputMeal2.editText?.addTextChangedListener { calculateCalories() }
-        binding.inputMeal3.editText?.addTextChangedListener { calculateCalories() }
-        binding.inputExercise.editText?.addTextChangedListener { calculateCalories() }
+        initViews()
+        initListeners()
+        initObservers()
 
 
-        binding.btnSetGoal.setOnClickListener { setGoal() }
-        binding.btnCalculate.setOnClickListener { calculateCalories() }
-        binding.btnRefresh.setOnClickListener {
-            refreshData()
-        }
-        binding.btnLogout.setOnClickListener {
-            logout()
-        }
-        binding.btnNext.setOnClickListener {
-            currentVideo++
-        }
-        binding.btnPrev.setOnClickListener {
-            currentVideo--
-        }
+        videoViewModel.getPlaylist()
+        videoViewModel.getUserInfo(authViewModel.getUserId())
+    }
 
+    private fun initObservers() {
         viewModel.getGoal().observe(this) {
             binding.tvGoal.text = String.format("Goal: %d", it)
         }
@@ -116,6 +100,40 @@ class DietActivity : AppCompatActivity() {
             this.playlist = it
             currentVideo = userInfo?.day ?: 0
         }
+    }
+
+    private fun initListeners() {
+        binding.inputMeal1.editText?.addTextChangedListener { calculateCalories() }
+        binding.inputMeal2.editText?.addTextChangedListener { calculateCalories() }
+        binding.inputMeal3.editText?.addTextChangedListener { calculateCalories() }
+        binding.inputExercise.editText?.addTextChangedListener { calculateCalories() }
+
+        binding.btnSetGoal.setOnClickListener { setGoal() }
+        binding.btnCalculate.setOnClickListener { calculateCalories() }
+        binding.btnRefresh.setOnClickListener {
+            refreshData()
+        }
+        binding.btnLogout.setOnClickListener {
+            logout()
+        }
+        binding.btnNext.setOnClickListener {
+            currentVideo++
+
+            // Update current watching video to database
+            val userInfo = UserInfo(authViewModel.getUserId(), currentVideo)
+            videoViewModel.saveUserInfo(userInfo)
+        }
+        binding.btnPrev.setOnClickListener {
+            currentVideo--
+
+            // Update current watching video to database
+            val userInfo = UserInfo(authViewModel.getUserId(), currentVideo)
+            videoViewModel.saveUserInfo(userInfo)
+        }
+    }
+
+    private fun initViews() {
+
     }
 
     private fun refreshData() {
