@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.diet.tracker.R
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 class YoutubeVideoView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
@@ -19,7 +17,17 @@ class YoutubeVideoView(context: Context, attrs: AttributeSet?) : FrameLayout(con
     }
 
     private val youtubeView: YouTubePlayerView by lazy { findViewById(R.id.youtubeVideoView) }
+    private var youtubePlayer: YouTubePlayer? = null
 
+    private lateinit var videoId: String
+    private val listener by lazy {
+        object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youtubePlayer = youTubePlayer
+                youtubePlayer?.cueVideo(videoId, 0f)
+            }
+        }
+    }
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         findViewTreeLifecycleOwner()?.lifecycle?.addObserver(youtubeView)
@@ -30,14 +38,17 @@ class YoutubeVideoView(context: Context, attrs: AttributeSet?) : FrameLayout(con
         findViewTreeLifecycleOwner()?.lifecycle?.removeObserver(youtubeView)
     }
 
-    fun setYoutubeVideoUrl(url: String?) {
-        url?.let {
-            youtubeView.enableAutomaticInitialization = false
-            youtubeView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    youTubePlayer.cueVideo(url, 0f)
-                }
-            })
+    fun setYoutubeVideoUrl(videoId: String?) {
+        if (youtubePlayer != null) {
+            videoId?.let {
+                youtubePlayer?.cueVideo(videoId, 0f)
+            }
+        } else {
+            videoId?.let {
+                this.videoId = videoId
+                youtubeView.enableAutomaticInitialization = false
+                youtubeView.addYouTubePlayerListener(listener)
+            }
         }
     }
 }
