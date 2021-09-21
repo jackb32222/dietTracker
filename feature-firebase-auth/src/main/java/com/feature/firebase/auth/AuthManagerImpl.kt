@@ -8,13 +8,17 @@ import java.lang.IllegalArgumentException
 
 class AuthManagerImpl(private val firebaseAuth: FirebaseAuth) : AuthManager {
 
+    override fun getUserId(): String {
+        return firebaseAuth.currentUser?.uid.orEmpty()
+    }
+
     override fun registerWithEmailPassword(email: String?, passwd: String?, callback: AuthCallback) {
         if (!email.isNullOrEmpty() && !passwd.isNullOrEmpty()) {
             firebaseAuth.createUserWithEmailAndPassword(email, passwd)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         firebaseAuth.currentUser?.let { firebaseUser ->
-                            callback.onRegisterSuccess(firebaseUser.toAuthUser())
+                            callback.onRegisterSuccess(firebaseUser)
                         }
                     } else {
                         callback.onRegisterFailure(it.exception)
@@ -34,7 +38,7 @@ class AuthManagerImpl(private val firebaseAuth: FirebaseAuth) : AuthManager {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     firebaseAuth.currentUser?.let { firebaseUser ->
-                        callback.onLoginSuccess(firebaseUser.toAuthUser())
+                        callback.onLoginSuccess(firebaseUser)
                     }
                 } else {
                     callback.onLoginFailure(it.exception)
@@ -51,7 +55,7 @@ class AuthManagerImpl(private val firebaseAuth: FirebaseAuth) : AuthManager {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     firebaseAuth.currentUser?.let { firebaseUser ->
-                        callback.onLoginSuccess(firebaseUser.toAuthUser())
+                        callback.onLoginSuccess(firebaseUser)
                     }
                 } else {
                     callback.onLoginFailure(it.exception)
@@ -68,7 +72,7 @@ class AuthManagerImpl(private val firebaseAuth: FirebaseAuth) : AuthManager {
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         firebaseAuth.currentUser?.let { firebaseUser ->
-                            callback.onLoginSuccess(firebaseUser.toAuthUser())
+                            callback.onLoginSuccess(firebaseUser)
                         }
                     } else {
                         callback.onLoginFailure(it.exception)
@@ -87,7 +91,7 @@ class AuthManagerImpl(private val firebaseAuth: FirebaseAuth) : AuthManager {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     firebaseAuth.currentUser?.let { firebaseUser ->
-                        callback.onLoginSuccess(firebaseUser.toAuthUser())
+                        callback.onLoginSuccess(firebaseUser)
                     }
                 } else {
                     callback.onLoginFailure(it.exception)

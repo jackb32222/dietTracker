@@ -10,6 +10,7 @@ import com.diet.tracker.ui.DietActivity
 import com.feature.firebase.auth.AuthCallback
 import com.feature.firebase.auth.domain.model.AuthUser
 import com.feature.firebase.auth.ui.AuthActivity
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
@@ -46,7 +47,7 @@ class RegisterActivity : AuthActivity(), AuthCallback {
         )
     }
 
-    override fun onRegisterSuccess(user: AuthUser) {
+    override fun onRegisterSuccess(user: FirebaseUser) {
         startActivity(Intent(this, DietActivity::class.java))
         finish()
     }

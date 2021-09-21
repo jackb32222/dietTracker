@@ -9,21 +9,18 @@ import androidx.lifecycle.Observer
 import com.diet.tracker.R
 import com.diet.tracker.databinding.ActivityBmrBinding
 import com.diet.tracker.datasource.model.Bmr
-import com.diet.tracker.datasource.model.Meal
 import com.diet.tracker.utils.getDouble
 import com.diet.tracker.utils.getInt
 import com.diet.tracker.viewmodel.DietViewModel
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFramePlayerOptions.Companion.default
+import com.diet.tracker.viewmodel.VideoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BmrActivity : AppCompatActivity() {
 
-    companion object {
-        const val VIDEO_URL = "gY_5rftmdZE"
-    }
     private lateinit var binding: ActivityBmrBinding
     private val viewModel: DietViewModel by viewModels()
+    private val videoViewModel: VideoViewModel by viewModels()
 
     private val bmrLiveData by lazy { viewModel.getBmr() }
     private val bmrObserver = Observer<Bmr> {
@@ -46,8 +43,6 @@ class BmrActivity : AppCompatActivity() {
         binding.inputWeight.editText?.addTextChangedListener { calculateBmr() }
         binding.inputHeight.editText?.addTextChangedListener { calculateBmr() }
         binding.gender.setOnCheckedChangeListener { _, _ -> calculateBmr() }
-
-        binding.videoView.setYoutubeVideoUrl(VIDEO_URL)
         binding.btnSetGoal.setOnClickListener { setGoal() }
 
         viewModel.getGoal().observe(this) {
@@ -55,6 +50,10 @@ class BmrActivity : AppCompatActivity() {
         }
 
         bmrLiveData.observe(this, bmrObserver)
+
+        videoViewModel.bmrVideo.observe(this) {
+            binding.videoView.setYoutubeVideoUrl(it.getVideoId())
+        }
     }
 
     private fun refresh() {

@@ -2,6 +2,7 @@ package com.diet.tracker.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -9,27 +10,29 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.diet.tracker.R
 import com.diet.tracker.databinding.ActivityMainBinding
+import com.diet.tracker.datasource.model.DietVideo
 import com.diet.tracker.datasource.model.Meal
+import com.diet.tracker.datasource.model.UserInfo
 import com.diet.tracker.notification.DietAlarmManager
-import com.diet.tracker.service.TimerService
 import com.diet.tracker.ui.auth.SignInActivity
-import com.diet.tracker.ui.custom.TimerView
 import com.diet.tracker.utils.getInt
+import com.diet.tracker.viewmodel.AuthViewModel
 import com.diet.tracker.viewmodel.DietViewModel
+import com.diet.tracker.viewmodel.VideoViewModel
 import com.feature.firebase.auth.AuthManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class DietActivity : AppCompatActivity() {
 
-    companion object {
-        const val VIDEO_URL = "gY_5rftmdZE"
-    }
-
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: DietViewModel by viewModels()
+    private val videoViewModel: VideoViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
+
     @Inject lateinit var alarmManager: DietAlarmManager
     @Inject lateinit var authManager: AuthManager
 
@@ -44,6 +47,35 @@ class DietActivity : AppCompatActivity() {
         binding.tvResult.text = String.format("Result: %d", getResult())
     }
 
+    private var userInfo: UserInfo? = null
+    private var playlist: List<DietVideo>? = null
+
+    private var nextEnable: Boolean = false
+        set(value) {
+            binding.btnNext.isEnabled = value
+            field = value
+        }
+    private var prevEnable: Boolean = false
+        set(value) {
+            binding.btnPrev.isEnabled = value
+            field = value
+        }
+
+    private var currentVideo: Int by Delegates.observable(0) { _, _, videoIdx ->
+        playlist?.let { videos ->
+            nextEnable = videoIdx < videos.size - 1
+            prevEnable = videoIdx > 0
+            val video = videos[videoIdx]
+            binding.videoView.setYoutubeVideoUrl(video.getVideoId())
+        }
+
+        binding.tvDay.text = "Day $videoIdx"
+
+        // Update current watching video to database
+        val userInfo = UserInfo(authViewModel.getUserId(), currentVideo)
+        videoViewModel.saveUserInfo(userInfo)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -53,17 +85,37 @@ class DietActivity : AppCompatActivity() {
         binding.inputMeal3.editText?.addTextChangedListener { calculateCalories() }
         binding.inputExercise.editText?.addTextChangedListener { calculateCalories() }
 
-        binding.videoView.setYoutubeVideoUrl(VIDEO_URL)
+
         binding.btnSetGoal.setOnClickListener { setGoal() }
         binding.btnCalculate.setOnClickListener { calculateCalories() }
-        binding.btnRefresh.setOnClickListener { refreshData() }
-        binding.btnLogout.setOnClickListener { logout() }
+        binding.btnRefresh.setOnClickListener {
+            refreshData()
+        }
+        binding.btnLogout.setOnClickListener {
+            logout()
+        }
+        binding.btnNext.setOnClickListener {
+            currentVideo++
+        }
+        binding.btnPrev.setOnClickListener {
+            currentVideo--
+        }
 
         viewModel.getGoal().observe(this) {
             binding.tvGoal.text = String.format("Goal: %d", it)
         }
 
         mealLiveData.observe(this, mealObserver)
+
+        videoViewModel.userInfo.observe(this) {
+            this.userInfo = it
+            currentVideo = userInfo?.day ?: 0
+        }
+
+        videoViewModel.playlist.observe(this) {
+            this.playlist = it
+            currentVideo = userInfo?.day ?: 0
+        }
     }
 
     private fun refreshData() {

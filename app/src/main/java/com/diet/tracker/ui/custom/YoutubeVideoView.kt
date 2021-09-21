@@ -30,12 +30,14 @@ class YoutubeVideoView(context: Context, attrs: AttributeSet?) : FrameLayout(con
         findViewTreeLifecycleOwner()?.lifecycle?.removeObserver(youtubeView)
     }
 
-    fun setYoutubeVideoUrl(url: String) {
-        youtubeView.enableAutomaticInitialization = false
-        youtubeView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.cueVideo(url, 0f)
-            }
-        })
+    fun setYoutubeVideoUrl(url: String?) {
+        url?.let {
+            youtubeView.enableAutomaticInitialization = false
+            youtubeView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    youTubePlayer.cueVideo(url, 0f)
+                }
+            })
+        }
     }
 }
