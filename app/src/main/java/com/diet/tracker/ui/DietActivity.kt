@@ -68,7 +68,7 @@ class DietActivity : AppCompatActivity() {
             binding.videoView.setYoutubeVideoUrl(video.getVideoId())
         }
 
-        binding.tvDay.text = "Day $videoIdx"
+        binding.tvDay.text = "Day ${videoIdx + 1}"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

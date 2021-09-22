@@ -3,6 +3,8 @@ package com.diet.tracker.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import com.diet.tracker.R
 import com.diet.tracker.databinding.ActivityRegisterBinding
@@ -30,14 +32,25 @@ class RegisterActivity : AuthActivity(), AuthCallback {
             binding.inputPasswd.editText?.setText(value)
         }
 
+    private var confirmedPassword: String?
+        get() = binding.inputConfirmPasswd.editText?.text?.toString()
+        set(value) {
+            binding.inputConfirmPasswd.editText?.setText(value)
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register)
 
         initListeners()
+        checkContinue()
     }
 
     private fun initListeners() {
+        binding.inputEmail.editText?.doAfterTextChanged { checkContinue() }
+        binding.inputPasswd.editText?.doAfterTextChanged { checkContinue() }
+        binding.inputConfirmPasswd.editText?.doAfterTextChanged { checkContinue() }
+
         registerAuthCallback(this)
 
         registerSignUpView(
@@ -53,8 +66,16 @@ class RegisterActivity : AuthActivity(), AuthCallback {
     }
 
     override fun onRegisterFailure(exc: Exception?) {
+        Toast.makeText(this, "Register failed", Toast.LENGTH_SHORT).show()
         Log.e("nt.dung", "Login failed -> ${exc?.message}")
         exc?.printStackTrace()
+    }
+
+    private fun checkContinue() {
+        binding.btnRegister.isEnabled = !email.isNullOrEmpty()
+                && !password.isNullOrEmpty()
+                && !confirmedPassword.isNullOrEmpty()
+                && (password == confirmedPassword)
     }
 
 }
