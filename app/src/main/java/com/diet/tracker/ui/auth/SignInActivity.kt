@@ -3,6 +3,8 @@ package com.diet.tracker.ui.auth
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import com.diet.tracker.R
 import com.diet.tracker.databinding.ActivitySiginInBinding
@@ -10,6 +12,7 @@ import com.diet.tracker.ui.DietActivity
 import com.feature.firebase.auth.AuthCallback
 import com.feature.firebase.auth.domain.model.AuthUser
 import com.feature.firebase.auth.ui.AuthActivity
+import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.Exception
 
@@ -35,9 +38,13 @@ class SignInActivity : AuthActivity(), AuthCallback {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sigin_in)
 
         initListeners()
+        checkContinue()
     }
 
     private fun initListeners() {
+        binding.inputEmail.editText?.doAfterTextChanged { checkContinue() }
+        binding.inputPasswd.editText?.doAfterTextChanged { checkContinue() }
+
         binding.tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -57,13 +64,18 @@ class SignInActivity : AuthActivity(), AuthCallback {
         )
     }
 
-    override fun onLoginSuccess(user: AuthUser) {
+    override fun onLoginSuccess(user: FirebaseUser) {
         startActivity(Intent(this, DietActivity::class.java))
         finish()
     }
 
     override fun onLoginFailure(exc: Exception?) {
+        Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
         Log.e("nt.dung", "Login failed -> ${exc?.message}")
         exc?.printStackTrace()
+    }
+
+    private fun checkContinue() {
+        binding.btnSignIn.isEnabled = !email.isNullOrEmpty() && !password.isNullOrEmpty()
     }
 }

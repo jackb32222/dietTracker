@@ -2,163 +2,199 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="12dp">
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
-        <com.diet.tracker.ui.custom.YoutubeVideoView
-            android:id="@+id/videoView"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="match_parent"
+            android:padding="12dp">
 
-        <LinearLayout
-            android:id="@+id/mealLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/videoView"
-            android:layout_marginVertical="12dp"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputMeal1"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/controller"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/meal_1">
+                android:orientation="horizontal"
+                android:paddingVertical="16dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnPrev"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:srcCompat="@drawable/ic_btn_previous" />
 
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputMeal2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/meal_2">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvDay"
+                    style="@style/TextAppearance.MaterialComponents.Subtitle1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                    android:layout_weight="1"
+                    android:gravity="center" />
 
-        <LinearLayout
-            android:id="@+id/mealLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/mealLayout1"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputMeal3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/meal_3">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnNext"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    app:srcCompat="@drawable/ic_btn_next" />
+            </LinearLayout>
 
-            <Space
-                android:layout_width="12dp"
-                android:layout_height="wrap_content" />
+            <com.diet.tracker.ui.custom.YoutubeVideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/controller" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputExercise"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/mealLayout1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/exercise_burnt_calories">
+                android:layout_below="@+id/videoView"
+                android:layout_marginVertical="12dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputMeal1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+                    android:layout_weight="1"
+                    android:hint="@string/meal_1">
 
-        <com.diet.tracker.ui.custom.TimerView
-            android:id="@+id/timerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/mealLayout2"
-            android:layout_marginVertical="20dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnCalculate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/btnSetGoal"
-            android:layout_toStartOf="@id/tvResult"
-            android:text="@string/calculate" />
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="wrap_content" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvResult"
-            style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/btnCalculate"
-            android:layout_alignBottom="@id/btnCalculate"
-            android:layout_alignParentEnd="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            tools:text="Result: 1450" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputMeal2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/meal_2">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSetGoal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/actionLayout"
-            android:layout_toStartOf="@id/tvGoal"
-            android:text="@string/goal" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tvGoal"
-            style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/btnSetGoal"
-            android:layout_alignBottom="@id/btnSetGoal"
-            android:layout_alignParentEnd="true"
-            android:gravity="center"
-            tools:text="Goal: 1500" />
-
-        <LinearLayout
-            android:id="@+id/actionLayout"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnRefresh"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <LinearLayout
+                android:id="@+id/mealLayout2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/refresh" />
+                android:layout_below="@+id/mealLayout1"
+                android:orientation="horizontal">
 
-            <Space
-                android:layout_width="16dp"
-                android:layout_height="wrap_content" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputMeal3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/meal_3">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputExercise"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/exercise_burnt_calories">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <com.diet.tracker.ui.custom.TimerView
+                android:id="@+id/timerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mealLayout2"
+                android:layout_marginVertical="20dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogout"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:id="@+id/btnCalculate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/signout" />
-        </LinearLayout>
+                android:layout_below="@id/timerView"
+                android:layout_toStartOf="@id/tvResult"
+                android:text="@string/calculate" />
 
-    </RelativeLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvResult"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btnCalculate"
+                android:layout_alignBottom="@id/btnCalculate"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                tools:text="Result: 1450" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSetGoal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnCalculate"
+                android:layout_toStartOf="@id/tvGoal"
+                android:text="@string/goal" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvGoal"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btnSetGoal"
+                android:layout_alignBottom="@id/btnSetGoal"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                tools:text="Goal: 1500" />
+
+            <LinearLayout
+                android:id="@+id/actionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btnSetGoal"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRefresh"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/refresh" />
+
+                <Space
+                    android:layout_width="16dp"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLogout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/signout" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

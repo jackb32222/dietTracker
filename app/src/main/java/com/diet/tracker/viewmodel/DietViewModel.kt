@@ -10,9 +10,11 @@ import javax.inject.Inject
 import kotlin.math.roundToInt
 
 @HiltViewModel
-class DietViewModel @Inject constructor(private val repo: DietRepo) : ViewModel() {
+class DietViewModel @Inject constructor(
+    private val repo: DietRepo
+) : ViewModel() {
 
-    fun calculateBmr(age: Int, weight: Double, height: Double, female: Boolean) : Int {
+    fun calculateBmr(age: Int, weight: Double, height: Double, female: Boolean): Int {
         val bmr = if (female) {
             655.1 + (9.563 * weight) + (1.85 * height) - (4.676 * age)
         } else {

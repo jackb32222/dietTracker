@@ -17,8 +17,10 @@ class LauncherActivity : AppCompatActivity() {
 
         if (authManager.isLoggedIn()) {
             startActivity(Intent(this, DietActivity::class.java))
+            finish()
         } else {
             startActivity(Intent(this, SignInActivity::class.java))
+            finish()
         }
     }
 
