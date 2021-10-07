@@ -27,8 +27,8 @@ class BmrActivity : AppCompatActivity() {
     private val bmrObserver = Observer<Bmr> {
         bmrLiveData.removeObservers(this)
         binding.inputAge.editText?.setText(it.age.convertToString())
-        binding.inputWeight.editText?.setText(it.weight.toString())
-        binding.inputHeight.editText?.setText(it.height.toString())
+        binding.inputWeight.editText?.setText(it.weight.convertToString())
+        binding.inputHeight.editText?.setText(it.height.convertToString())
         binding.rdoFemale.isChecked = it.isFemale
 
         binding.tvResult.text = String.format("Result: %d", getResult())

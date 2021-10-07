@@ -21,3 +21,4 @@ fun Long.parseToString() : String {
 }
 
 fun Int.convertToString() = if (this <= 0) "" else toString()
+fun Double.convertToString() = if (this <= 0) "" else toString()
