@@ -14,6 +14,7 @@ import com.diet.tracker.datasource.model.Meal
 import com.diet.tracker.datasource.model.UserInfo
 import com.diet.tracker.notification.DietAlarmManager
 import com.diet.tracker.ui.auth.SignInActivity
+import com.diet.tracker.utils.convertToString
 import com.diet.tracker.utils.getInt
 import com.diet.tracker.viewmodel.AuthViewModel
 import com.diet.tracker.viewmodel.DietViewModel
@@ -38,12 +39,14 @@ class DietActivity : AppCompatActivity() {
     private val mealLiveData by lazy { viewModel.getMeal() }
     private val mealObserver = Observer<Meal> {
         mealLiveData.removeObservers(this)
-        binding.inputMeal1.editText?.setText(it.meal1.toString())
-        binding.inputMeal2.editText?.setText(it.meal2.toString())
-        binding.inputMeal3.editText?.setText(it.meal3.toString())
-        binding.inputExercise.editText?.setText(it.exercise.toString())
 
-        binding.tvResult.text = String.format("Result: %d", getResult())
+        with(binding) {
+            inputMeal1.editText?.setText(it.meal1.convertToString())
+            inputMeal2.editText?.setText(it.meal2.convertToString())
+            inputMeal3.editText?.setText(it.meal3.convertToString())
+            inputExercise.editText?.setText(it.exercise.convertToString())
+            tvResult.text = String.format("Result: %d", getResult())
+        }
     }
 
     private var userInfo: UserInfo? = null

@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import com.diet.tracker.R
 import com.diet.tracker.databinding.ActivityBmrBinding
 import com.diet.tracker.datasource.model.Bmr
+import com.diet.tracker.utils.convertToString
 import com.diet.tracker.utils.getDouble
 import com.diet.tracker.utils.getInt
 import com.diet.tracker.viewmodel.DietViewModel
@@ -25,7 +26,7 @@ class BmrActivity : AppCompatActivity() {
     private val bmrLiveData by lazy { viewModel.getBmr() }
     private val bmrObserver = Observer<Bmr> {
         bmrLiveData.removeObservers(this)
-        binding.inputAge.editText?.setText(it.age.toString())
+        binding.inputAge.editText?.setText(it.age.convertToString())
         binding.inputWeight.editText?.setText(it.weight.toString())
         binding.inputHeight.editText?.setText(it.height.toString())
         binding.rdoFemale.isChecked = it.isFemale
