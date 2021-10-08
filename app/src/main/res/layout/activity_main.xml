@@ -151,29 +151,17 @@
                 tools:text="Result: 1450" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSetGoal"
+                android:id="@+id/btnLogWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/btnCalculate"
-                android:layout_toStartOf="@id/tvGoal"
-                android:text="@string/goal" />
+                android:text="@string/log_weight" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvGoal"
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/btnSetGoal"
-                android:layout_alignBottom="@id/btnSetGoal"
-                android:layout_alignParentEnd="true"
-                android:gravity="center"
-                tools:text="Goal: 1500" />
-
-            <LinearLayout
+             <LinearLayout
                 android:id="@+id/actionLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/btnSetGoal"
+                android:layout_below="@+id/btnLogWeight"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton

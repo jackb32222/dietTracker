@@ -18,6 +18,7 @@ import com.diet.tracker.utils.convertToString
 import com.diet.tracker.utils.getInt
 import com.diet.tracker.viewmodel.AuthViewModel
 import com.diet.tracker.viewmodel.DietViewModel
+import com.diet.tracker.viewmodel.UserViewModel
 import com.diet.tracker.viewmodel.VideoViewModel
 import com.feature.firebase.auth.AuthManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +32,7 @@ class DietActivity : AppCompatActivity() {
 
     private val viewModel: DietViewModel by viewModels()
     private val videoViewModel: VideoViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
 
     @Inject lateinit var alarmManager: DietAlarmManager
@@ -84,17 +86,13 @@ class DietActivity : AppCompatActivity() {
 
 
         videoViewModel.getPlaylist()
-        videoViewModel.getUserInfo(authViewModel.getUserId())
+        userViewModel.getUserInfo(authViewModel.getUserId())
     }
 
     private fun initObservers() {
-        viewModel.getGoal().observe(this) {
-            binding.tvGoal.text = String.format("Goal: %d", it)
-        }
-
         mealLiveData.observe(this, mealObserver)
 
-        videoViewModel.userInfo.observe(this) {
+        userViewModel.lvUser.observe(this) {
             this.userInfo = it
             currentVideo = userInfo?.day ?: 0
         }
@@ -111,7 +109,9 @@ class DietActivity : AppCompatActivity() {
         binding.inputMeal3.editText?.addTextChangedListener { calculateCalories() }
         binding.inputExercise.editText?.addTextChangedListener { calculateCalories() }
 
-        binding.btnSetGoal.setOnClickListener { setGoal() }
+        binding.btnLogWeight.setOnClickListener {
+            startActivity(Intent(this, WeightActivity::class.java))
+        }
         binding.btnCalculate.setOnClickListener { calculateCalories() }
         binding.btnRefresh.setOnClickListener {
             refreshData()
@@ -123,15 +123,15 @@ class DietActivity : AppCompatActivity() {
             currentVideo++
 
             // Update current watching video to database
-            val userInfo = UserInfo(authViewModel.getUserId(), currentVideo)
-            videoViewModel.saveUserInfo(userInfo)
+            val userInfo = UserInfo(currentVideo)
+            userViewModel.saveUserInfo(authViewModel.getUserId(), userInfo)
         }
         binding.btnPrev.setOnClickListener {
             currentVideo--
 
             // Update current watching video to database
-            val userInfo = UserInfo(authViewModel.getUserId(), currentVideo)
-            videoViewModel.saveUserInfo(userInfo)
+            val userInfo = UserInfo(currentVideo)
+            userViewModel.saveUserInfo(authViewModel.getUserId(), userInfo)
         }
     }
 

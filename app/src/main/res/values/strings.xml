@@ -8,6 +8,7 @@
 
     <string name="calculate">Calculate</string>
     <string name="goal">Set goal</string>
+    <string name="log_weight">Log Weight</string>
     <string name="refresh">Refresh</string>
 
     <string name="meal_1">"Meal 1"</string>
