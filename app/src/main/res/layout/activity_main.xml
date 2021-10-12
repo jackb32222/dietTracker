@@ -131,37 +131,49 @@
                 android:layout_marginVertical="20dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCalculate"
+                android:id="@+id/btnLogWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/timerView"
                 android:layout_toStartOf="@id/tvResult"
-                android:text="@string/calculate" />
+                android:text="@string/log_weight" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvResult"
                 style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/btnCalculate"
-                android:layout_alignBottom="@id/btnCalculate"
+                android:layout_alignTop="@+id/btnLogWeight"
+                android:layout_alignBottom="@id/btnLogWeight"
                 android:layout_alignParentEnd="true"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 tools:text="Result: 1450" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogWeight"
+                android:id="@+id/btnSetGoal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/btnCalculate"
-                android:text="@string/log_weight" />
+                android:layout_below="@id/btnLogWeight"
+                android:layout_toStartOf="@id/tvGoal"
+                android:text="@string/goal" />
 
-             <LinearLayout
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvGoal"
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/btnSetGoal"
+                android:layout_alignBottom="@id/btnSetGoal"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                tools:text="Goal: 1500" />
+
+            <LinearLayout
                 android:id="@+id/actionLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/btnLogWeight"
+                android:layout_below="@+id/btnSetGoal"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton

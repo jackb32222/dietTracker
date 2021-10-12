@@ -109,10 +109,10 @@ class DietActivity : AppCompatActivity() {
         binding.inputMeal3.editText?.addTextChangedListener { calculateCalories() }
         binding.inputExercise.editText?.addTextChangedListener { calculateCalories() }
 
+        binding.btnSetGoal.setOnClickListener { setGoal() }
         binding.btnLogWeight.setOnClickListener {
             startActivity(Intent(this, WeightActivity::class.java))
         }
-        binding.btnCalculate.setOnClickListener { calculateCalories() }
         binding.btnRefresh.setOnClickListener {
             refreshData()
         }
