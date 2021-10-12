@@ -19,8 +19,8 @@ class UserViewModel @Inject constructor(private val database: FirebaseDatabase) 
     private var userRef: DatabaseReference? = null
 
     fun getUserInfo(userId: String) {
+        Log.d("nt.dung", "User Id: $userId")
         userRef = database.getReference(AppConstants.NodeKey.User).child(userId)
-        userValueListener
         userRef?.addValueEventListener(userValueListener)
     }
 
@@ -38,9 +38,13 @@ class UserViewModel @Inject constructor(private val database: FirebaseDatabase) 
 
     inner class UserValueEventListener : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
-            val user: UserInfo? = snapshot.getValue(UserInfo::class.java)
-            user?.let {
-                lvUser.postValue(it)
+            try {
+                val user: UserInfo? = snapshot.getValue(UserInfo::class.java)
+                user?.let {
+                    lvUser.postValue(it)
+                }
+            } catch (exc: Exception) {
+                Log.e("nt.dung", "Exception: ${exc.message}")
             }
         }
 
