@@ -90,6 +90,10 @@ class DietActivity : AppCompatActivity() {
     }
 
     private fun initObservers() {
+        viewModel.getGoal().observe(this) {
+            binding.tvGoal.text = String.format("Goal: %d", it)
+        }
+
         mealLiveData.observe(this, mealObserver)
 
         userViewModel.lvUser.observe(this) {
