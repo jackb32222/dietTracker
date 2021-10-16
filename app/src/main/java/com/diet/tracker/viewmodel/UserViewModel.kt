@@ -36,6 +36,19 @@ class UserViewModel @Inject constructor(private val database: FirebaseDatabase) 
             }
     }
 
+    fun saveUserCurrentDay(userId: String, currentDay: Long) {
+        database.getReference(AppConstants.NodeKey.User)
+            .child(userId)
+            .child(AppConstants.NodeKey.Day)
+            .setValue(currentDay)
+            .addOnFailureListener {
+                Log.e("nt.dung", "Save user info failed. ${it.message}")
+            }
+            .addOnSuccessListener {
+                Log.d("nt.dung", "Save user successfully")
+            }
+    }
+
     inner class UserValueEventListener : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             try {

@@ -127,15 +127,13 @@ class DietActivity : AppCompatActivity() {
             currentVideo++
 
             // Update current watching video to database
-            val userInfo = UserInfo(currentVideo)
-            userViewModel.saveUserInfo(authViewModel.getUserId(), userInfo)
+            userViewModel.saveUserCurrentDay(authViewModel.getUserId(), currentVideo.toLong())
         }
         binding.btnPrev.setOnClickListener {
             currentVideo--
 
             // Update current watching video to database
-            val userInfo = UserInfo(currentVideo)
-            userViewModel.saveUserInfo(authViewModel.getUserId(), userInfo)
+            userViewModel.saveUserCurrentDay(authViewModel.getUserId(), currentVideo.toLong())
         }
     }
 
